@@ -1,4 +1,4 @@
-Download MuseScore PDFs via command line.
+API for downloading from MuseScore for free.
 
 This tool uses knowledge derived from the Librescore
  project, which documented MuseScore’s internal API.

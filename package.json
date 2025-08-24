@@ -1,0 +1,31 @@
+{
+  "name": "cli-score",
+  "version": "1.0.0",
+  "description": "Download from MuseScore for free via CLI.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "music",
+    "score",
+    "sheets",
+    "musescore",
+    "cli",
+    "downloader"
+  ],
+  "author": "Alec Jiang",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jsdom": "^21.1.7",
+    "@types/node": "^24.3.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "inquirer": "^12.9.3",
+    "jsdom": "^26.1.0",
+    "node-fetch": "^3.3.2"
+  }
+}

@@ -1,4 +1,3 @@
-import fetch from "node-fetch";
 import { JSDOM } from "jsdom";
 import { createHash } from "crypto";
 
@@ -46,6 +45,24 @@ async function getSuffix(url: string): Promise<string | undefined> {
     return;
 }
 
+export async function getScoreName(url: string) {
+    const response = await fetch(url, {
+        headers: {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"
+        }
+    });
+    const html = await response.text();
+
+    const regex = /title" content="([\S|\s][^"]+)/;
+    const name = html.match(regex)
+
+    if (!name || !name[1]) {
+        return "Sheets";
+    }
+
+    return name[1]
+}
+
 function generateToken(id: string, type: string, index: string, suffix: string): string {
     const input = id + type + index + suffix;
     const hash = createHash("md5");
@@ -57,7 +74,7 @@ function getApiEndpoint(id: string, index: string, type: string): string {
     return `/api/jmuse?id=${id}&index=${index}&type=${type}`;
 }
 
-export async function fetchApiImages(url: string): Promise<string[]> {
+export async function fetchApi(url: string, type: string): Promise<string[]> {
     try {
         const regex = /scores\/([0-9]{8})/;
         const match = url.match(regex);
@@ -65,14 +82,18 @@ export async function fetchApiImages(url: string): Promise<string[]> {
         const id = match[1];
         if (!id) {throw new Error("No capture group: id");}
 
-        const type = "img";
         const suffix = await getSuffix(url);
         if (suffix === undefined) {throw new Error("Error getting suffix");}
 
-        const MAX_PAGES = 6;
+        let maxPages = 1;
+
+        if (type == "img") {
+            maxPages = 100;
+        }
+
         const pageUrls: string[] = [];
 
-        for (let index = 0; index < MAX_PAGES; index++) {
+        for (let index = 0; index < maxPages; index++) {
             try {
                 const authToken = generateToken(id, type, index.toString(), suffix);
                 const apiUrl = getApiEndpoint(id, index.toString(), type);
@@ -84,10 +105,11 @@ export async function fetchApiImages(url: string): Promise<string[]> {
                     }
                 });
                 const data = await request.json() as ApiResponse;
-                const imageUrl = data.info.url;
-                if (!imageUrl) {throw new Error("Image URL not found.");}
-                if (imageUrl.startsWith("https://s3.ultimate-guitar.com")) {break;}
-                pageUrls.push(imageUrl);
+                const dataURL = data.info.url;
+                if (!dataURL) {throw new Error("Data URL not found.");}
+                if (dataURL.startsWith("https://s3.ultimate-guitar.com")) {break;}
+                
+                pageUrls.push(dataURL);
 
             } catch (error) {
                 console.error(error);
@@ -95,7 +117,7 @@ export async function fetchApiImages(url: string): Promise<string[]> {
             }
         }
 
-        console.log(pageUrls);
+        // console.log(pageUrls);
         return pageUrls;
 
     } catch (error) {
@@ -104,4 +126,4 @@ export async function fetchApiImages(url: string): Promise<string[]> {
     }
 }
 
-fetchApiImages("https://musescore.com/user/32413850/scores/26062204")
+// fetchApiImages("https://musescore.com/user/32413850/scores/26062204")

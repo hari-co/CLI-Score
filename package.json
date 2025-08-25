@@ -18,14 +18,28 @@
   "author": "Alec Jiang",
   "license": "MIT",
   "devDependencies": {
+    "@types/express": "^5.0.3",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^24.3.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.2"
   },
   "dependencies": {
+    "body-parser": "^2.2.0",
+    "canvas": "^3.2.0",
+    "express": "^5.1.0",
     "inquirer": "^12.9.3",
     "jsdom": "^26.1.0",
-    "node-fetch": "^3.3.2"
-  }
+    "jspdf": "^3.0.1",
+    "node-fetch": "^3.3.2",
+    "svg2pdf.js": "^2.5.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hari-co/CLI-Score.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hari-co/CLI-Score/issues"
+  },
+  "homepage": "https://github.com/hari-co/CLI-Score#readme"
 }

@@ -2,10 +2,11 @@
   "name": "cli-score",
   "version": "1.0.0",
   "description": "Download from MuseScore for free via CLI.",
-  "main": "index.js",
+  "main": "server.ts",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node dist/server.js",
+    "dev": "node --loader ts-node/esm src/server.ts"
   },
   "keywords": [
     "music",
@@ -28,18 +29,16 @@
     "body-parser": "^2.2.0",
     "canvas": "^3.2.0",
     "express": "^5.1.0",
-    "inquirer": "^12.9.3",
     "jsdom": "^26.1.0",
     "jspdf": "^3.0.1",
-    "node-fetch": "^3.3.2",
-    "svg2pdf.js": "^2.5.0"
+    "node-fetch": "^3.3.2"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hari-co/CLI-Score.git"
+    "url": "git+https://github.com/hari-co/Score-Fetch.git"
   },
   "bugs": {
-    "url": "https://github.com/hari-co/CLI-Score/issues"
+    "url": "https://github.com/hari-co/Score-Fetch/issues"
   },
-  "homepage": "https://github.com/hari-co/CLI-Score#readme"
+  "homepage": "https://github.com/hari-co/Score-Fetch#readme"
 }

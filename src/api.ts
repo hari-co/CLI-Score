@@ -34,7 +34,7 @@ async function getSuffix(url: string): Promise<string | undefined> {
     });
         const text = await scriptResponse.text();
         
-        const regex = /([a-z]{3})"\)\.substr\(0,4\)/;
+        const regex = /"([^"]+)"\)\.substr\(0,4\)/;
         const match = text.match(regex);
 
         if (match) {

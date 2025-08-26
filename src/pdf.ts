@@ -10,6 +10,7 @@ export async function convertToPDF(urls: string[]) {
             console.warn(`Invalid URL at index ${i}`);
             continue;
         }
+        if (url.startsWith("https://s3.ultimate-guitar.com")) {continue;}
         const response = await fetch(url);
 
         const scale = 3;

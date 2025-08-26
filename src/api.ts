@@ -76,7 +76,7 @@ function getApiEndpoint(id: string, index: string, type: string): string {
 
 export async function fetchApi(url: string, type: string): Promise<string[]> {
     try {
-        const regex = /scores\/([0-9]{8})/;
+        const regex = /scores\/([0-9]{7,8})/;
         const match = url.match(regex);
         if (!match) {throw new Error("No Regex match: id");}
         const id = match[1];

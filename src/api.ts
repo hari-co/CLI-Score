@@ -34,7 +34,7 @@ async function getSuffix(url: string): Promise<string | undefined> {
     });
         const text = await scriptResponse.text();
         
-        const regex = /([a-z]{3})"\)\.substr\(0,4\)/;
+        const regex = /"([^"]+)"\)\.substr\(0,4\)/;
         const match = text.match(regex);
 
         if (match) {
@@ -76,7 +76,7 @@ function getApiEndpoint(id: string, index: string, type: string): string {
 
 export async function fetchApi(url: string, type: string): Promise<string[]> {
     try {
-        const regex = /scores\/([0-9]{8})/;
+        const regex = /scores\/([0-9]{7,8})/;
         const match = url.match(regex);
         if (!match) {throw new Error("No Regex match: id");}
         const id = match[1];

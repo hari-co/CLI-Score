@@ -7,6 +7,10 @@ import { toBuffer } from "./parse-url.js";
 const app = express()
 const port = 3000
 
+function cleanScoreName(name: string): string {
+    return name.replace(/[^\t\x20-\x7E\x80-\xFF]/g, '');
+}
+
 app.get("/pdf", async (req, res) => {
     const url = req.query.url;
     const regex = /user\/[0-9]+\/scores\/[0-9]+/
@@ -21,7 +25,8 @@ app.get("/pdf", async (req, res) => {
         return res.status(400).json({error: "Invalid MuseScore URL format"});
     }
 
-    const scoreName = await getScoreName(url);
+    const scoreName = cleanScoreName(await getScoreName(url));
+    console.log("Score Name: " + scoreName);
     const imageUrls = await fetchApi(url, "img");
     const pdfBuffer = await convertToPDF(imageUrls);
     res.setHeader('Content-Type', 'application/pdf');
